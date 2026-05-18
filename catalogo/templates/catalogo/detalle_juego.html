@@ -1,0 +1,25 @@
+{% extends 'catalogo/base.html' %}
+{% block title %}{{ juego.titulo }}{% endblock %}
+
+{% block content %}
+    <div style="display: flex; gap: 40px; background: #1e1e1e; padding: 30px; border-radius: 10px; border: 1px solid #6200ea;">
+        <div style="flex: 1;">
+            {% if juego.portada %}
+                <img src="{{ juego.portada.url }}" style="width: 100%; border-radius: 8px;">
+            {% endif %}
+        </div>
+        <div style="flex: 1;">
+            <h1 style="color: #00e5ff; margin-top: 0;">{{ juego.titulo }}</h1>
+            <h2>Precio: ${{ juego.precio }}</h2>
+            <hr style="border-color: #333;">
+            <ul style="line-height: 2; font-size: 1.1em; color: #ccc;">
+                <li><b>Plataforma:</b> {{ juego.plataforma.nombre }}</li>
+                <li><b>Desarrolladora:</b> {{ juego.desarrolladora.nombre }}</li>
+                <li><b>Año de lanzamiento:</b> {{ juego.anio }}</li>
+                <li><b>Vendedor a cargo:</b> {{ juego.vendedor.alias }}</li>
+            </ul>
+            <br>
+            <a href="{% url 'home' %}" class="btn">&larr; Regresar al lobby</a>
+        </div>
+    </div>
+{% endblock %}
