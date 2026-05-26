@@ -1,58 +1,55 @@
 {% extends 'catalogo/base.html' %}
 
 {% block content %}
-<div class="container mt-5 mb-5">
-    <div class="row bg-dark rounded-4 shadow-lg overflow-hidden" style="border: 1px solid #00fbff; background: linear-gradient(145deg, #1a1a1a, #000000);">
+<div class="container mt-5">
+    <div class="row bg-dark text-white rounded-4 shadow-lg overflow-hidden border border-info mx-auto" style="max-width: 850px;">
         
-        <div class="col-md-5 p-0">
+        <div class="col-md-6 p-0">
             {% if juego.portada %}
-                <img src="{{ juego.portada.url }}" class="img-fluid h-100 w-100" style="object-fit: cover; min-height: 400px;" alt="{{ juego.titulo }}">
-            {% else %}
-                <div class="bg-secondary d-flex align-items-center justify-content-center h-100" style="min-height: 400px;">
-                    <span class="text-white">Sin Imagen</span>
-                </div>
+                <img src="{{ juego.portada.url }}" class="img-fluid h-100 w-100" style="object-fit: cover; min-height: 400px;">
             {% endif %}
         </div>
 
-        <div class="col-md-7 p-5 text-white">
-            <div class="d-flex justify-content-between align-items-start">
-                <h1 class="display-4 fw-bold" style="color: #00fbff; text-shadow: 0 0 10px rgba(0, 251, 255, 0.5);">
-                    {{ juego.titulo }}
-                </h1>
-                <span class="badge rounded-pill bg-info text-dark mt-3 fs-6">{{ juego.anio }}</span>
-            </div>
+        <div class="col-md-6 p-5 d-flex flex-column justify-content-center">
+            <h1 class="display-5 fw-bold text-info mb-1">{{ juego.titulo }}</h1>
+            <p class="text-secondary mb-3">{{ juego.anio }} | {{ juego.desarrolladora.nombre }}</p>
             
-            <p class="text-muted fs-5 mb-4 italic">Por: {{ juego.desarrolladora.nombre }}</p>
+            <h2 class="text-success fw-bold mb-4" style="font-size: 2.8rem;">${{ juego.precio }}</h2>
             
-            <h2 class="text-success fw-bold mb-4">Precio: ${{ juego.precio }}</h2>
-            
-            <hr style="background-color: #00fbff; height: 2px; opacity: 0.5;">
-            
-            <h5 class="text-info mt-4">Descripción:</h5>
-            <p class="lead" style="color: #cccccc;">{{ juego.descripcion }}</p>
+            <hr class="border-secondary opacity-50">
 
-            <div class="row mt-4">
+            <div class="col-6">
+    <p class="mb-0 text-muted small">VENDEDOR</p>
+    <p class="fw-bold text-info">
+        {% if juego.vendedores %} 
+            @{{ juego.vendedores.nombre }}
+        {% elif juego.vendedor %}
+            @{{ juego.vendedor.nombre }}
+        {% elif juego.vendedor.username %}
+            @{{ juego.vendedor.username }}
+        {% else %}
+            @PixelVault_Oficial
+        {% endif %}
+    </p>
+</div>
+
                 <div class="col-6">
-                    <p><strong>Vendedor:</strong> <br> <span class="text-info">@{{ juego.vendedor.username }}</span></p>
-                </div>
-                <div class="col-6">
-                    <p><strong>Géneros:</strong> <br> 
-                        <span class="text-info">
+                    <p class="mb-0 text-muted small">GÉNERO</p>
+                    <p class="fw-bold text-info">
+                        {% if juego.generos.all %}
                             {% for genero in juego.generos.all %}
                                 {{ genero.nombre }}{% if not forloop.last %}, {% endif %}
                             {% endfor %}
-                        </span>
+                        {% else %}
+                            General
+                        {% endif %}
                     </p>
                 </div>
             </div>
 
-            <div class="d-grid gap-3 mt-5">
-                <button class="btn btn-lg fw-bold shadow-sm" style="background-color: #00fbff; color: #000; transition: 0.3s;" onmouseover="this.style.backgroundColor='#00d1d6'" onmouseout="this.style.backgroundColor='#00fbff'">
-                    🚀 COMPRAR AHORA
-                </button>
-                <a href="{% url 'home' %}" class="btn btn-outline-light">
-                    ⬅ Volver a la Tienda
-                </a>
+            <div class="d-grid gap-2">
+                <button class="btn btn-info btn-lg fw-bold text-dark shadow">🚀 COMPRAR AHORA</button>
+                <a href="{% url 'home' %}" class="btn btn-outline-light btn-sm mt-2">⬅ Volver a la Tienda</a>
             </div>
         </div>
     </div>
