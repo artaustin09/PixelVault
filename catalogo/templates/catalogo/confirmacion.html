@@ -1,0 +1,25 @@
+{% extends 'catalogo/base.html' %}
+
+{% block content %}
+<div class="container mt-5 d-flex justify-content-center">
+    <div class="bg-dark p-5 rounded-4 border border-success text-center shadow-lg" 
+         style="max-width: 600px; background: linear-gradient(145deg, #0a0a0a, #1a1a1a);">
+        
+        <h1 class="display-4 fw-bold text-success mb-2">¡COMPRA EXITOSA!</h1>
+        <div class="my-4">
+            <span class="badge bg-info text-dark fs-5 p-3">Key: PX-{{ juego.id }}77-VLT</span>
+        </div>
+        
+        <h3 class="text-white mb-4">Has adquirido <span class="text-info">{{ juego.titulo }}</span></h3>
+        
+        <p class="text-secondary fs-5 mb-5">
+            El código ha sido enviado a tu cuenta.<br>
+            Vendedor: <span class="text-info">@{{ juego.vendedor.username }}</span>
+        </p>
+
+        <div class="d-grid gap-3">
+            <a href="{% url 'home' %}" class="btn btn-outline-info fw-bold p-3">VOLVER A LA TIENDA</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

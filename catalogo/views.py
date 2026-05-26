@@ -3,13 +3,13 @@ from .models import Videojuego
 
 def home(request):
     juegos = Videojuego.objects.all()
-    # Buscador opcional
-    query = request.GET.get('q')
-    if query:
-        juegos = juegos.filter(titulo__icontains=query)
-    return render(request, 'catalogo/index.html', {'juegos': juegos})
+    # Verifica que el archivo esté en templates/catalogo/home.html
+    return render(request, 'catalogo/home.html', {'juegos': juegos})
 
-def detalle(request, juego_id):
-    # Trae el juego o lanza error 404 si el ID no existe
+def detalle_juego(request, juego_id):
     juego = get_object_or_404(Videojuego, pk=juego_id)
     return render(request, 'catalogo/detalle_juego.html', {'juego': juego})
+
+def confirmar_compra(request, juego_id):
+    juego = get_object_or_404(Videojuego, pk=juego_id)
+    return render(request, 'catalogo/confirmacion.html', {'juego': juego})

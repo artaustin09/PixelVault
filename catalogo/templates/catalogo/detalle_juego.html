@@ -21,37 +21,49 @@
             <div class="col-6">
     <p class="mb-0 text-muted small">VENDEDOR</p>
     <p class="fw-bold text-info">
-        {% if juego.vendedores %} 
-            @{{ juego.vendedores.nombre }}
-        {% elif juego.vendedor %}
-            @{{ juego.vendedor.nombre }}
-        {% elif juego.vendedor.username %}
-            @{{ juego.vendedor.username }}
+        {% if juego.vendedor %}
+            {# Intento 1: Si el campo es una relación al User de Django #}
+            {% if juego.vendedor.username %}
+                @{{ juego.vendedor.username }}
+            {# Intento 2: Si el modelo Vendedor tiene un campo 'nombre' #}
+            {% elif juego.vendedor.nombre %}
+                @{{ juego.vendedor.nombre }}
+            {# Intento 3: Mostrar el objeto directamente #}
+            {% else %}
+                {{ juego.vendedor }}
+            {% endif %}
         {% else %}
-            @PixelVault_Oficial
+            <span class="text-danger">Sin asignar</span>
         {% endif %}
     </p>
 </div>
-
                 <div class="col-6">
                     <p class="mb-0 text-muted small">GÉNERO</p>
                     <p class="fw-bold text-info">
-                        {% if juego.generos.all %}
-                            {% for genero in juego.generos.all %}
-                                {{ genero.nombre }}{% if not forloop.last %}, {% endif %}
-                            {% endfor %}
-                        {% else %}
-                            General
-                        {% endif %}
+                        {% for genero in juego.generos.all %}
+                            {{ genero.nombre }}{% if not forloop.last %}, {% endif %}
+                        {% endfor %}
                     </p>
                 </div>
             </div>
 
             <div class="d-grid gap-2">
-                <button class="btn btn-info btn-lg fw-bold text-dark shadow">🚀 COMPRAR AHORA</button>
-                <a href="{% url 'home' %}" class="btn btn-outline-light btn-sm mt-2">⬅ Volver a la Tienda</a>
+                <a href="{% url 'confirmar_compra' juego.id %}" class="btn btn-info btn-lg fw-bold shadow">
+    🚀 COMPRAR AHORA
+</a>
+                </a>
+                <a href="{% url 'home' %}" class="btn btn-outline-light btn-sm mt-2">⬅ Volver</a>
             </div>
         </div>
     </div>
 </div>
+
+<style>
+    .btn-neon { transition: 0.3s; }
+    .btn-neon:hover {
+        background-color: #00d1d4 !important;
+        box-shadow: 0 0 20px rgba(0, 251, 255, 0.6);
+        transform: translateY(-2px);
+    }
+</style>
 {% endblock %}

@@ -21,7 +21,7 @@
                 <h3 style="margin: 10px 0;">{{ juego.titulo }}</h3>
                 <p style="color: #00e5ff; font-size: 1.2em;"><b>${{ juego.precio }}</b></p>
                 <p style="font-size: 0.8em; color: #aaa;">{{ juego.plataforma.nombre }}</p>
-                <a href="{% url 'detalle' juego.id %}" class="btn" style="display: block;">Ver Info</a>
+                <a href="{% url 'detalle_juego' juego.id %}">
             </div>
         {% empty %}
             <p>No se encontraron juegos en la bóveda.</p>
