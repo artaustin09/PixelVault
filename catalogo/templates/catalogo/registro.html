@@ -1,0 +1,46 @@
+{% extends 'catalogo/base.html' %}
+
+{% block content %}
+<div style="background-color: #000; min-height: 80vh; display: flex; align-items: center; justify-content: center; padding: 20px;">
+    <div style="background: #111; padding: 40px; border-radius: 15px; border: 1px solid #6200ea; width: 100%; max-width: 400px; box-shadow: 0 0 20px rgba(98, 0, 234, 0.2);">
+        
+        <h2 style="color: #00e5ff; text-align: center; margin-bottom: 30px; text-transform: uppercase; letter-spacing: 2px;">Crear Cuenta</h2>
+        
+        <form method="POST" style="color: white;">
+            {% csrf_token %}
+            
+            {% for field in form %}
+                <div style="margin-bottom: 20px;">
+                    <label style="display: block; margin-bottom: 5px; color: #aaa;">{{ field.label }}</label>
+                    {{ field }}
+                    {% if field.errors %}
+                        <small style="color: #ff1744;">{{ field.errors|striptags }}</small>
+                    {% endif %}
+                </div>
+            {% endfor %}
+
+            <button type="submit" style="width: 100%; background: #6200ea; color: white; padding: 12px; border: none; border-radius: 5px; font-weight: bold; cursor: pointer; text-transform: uppercase; margin-top: 10px;">
+                Registrarse en la Bóveda
+            </button>
+        </form>
+
+        <p style="text-align: center; margin-top: 20px; color: #555;">
+            ¿Ya tienes cuenta? <a href="{% url 'login' %}" style="color: #00e5ff; text-decoration: none;">Inicia sesión aquí</a>
+        </p>
+    </div>
+</div>
+
+<style>
+    /* Estilo para los inputs de Django */
+    input {
+        width: 100%;
+        padding: 10px;
+        background: #1a1a1a;
+        border: 1px solid #333;
+        border-radius: 4px;
+        color: white;
+        outline: none;
+    }
+    input:focus { border-color: #00e5ff; }
+</style>
+{% endblock %}

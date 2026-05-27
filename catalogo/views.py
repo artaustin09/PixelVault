@@ -2,7 +2,8 @@ from django.shortcuts import render, get_object_or_404, redirect
 from .models import Videojuego
 from .carrito import Carrito 
 from django.db.models import Q # Para el buscador avanzado
-
+from django.contrib.auth import login
+from .forms import RegistroForm
 # --- HOME CON BUSCADOR PROFUNDO ---
 def home(request):
     juegos = Videojuego.objects.all()
@@ -59,3 +60,14 @@ def confirmar_compra(request):
     carrito = Carrito(request)
     carrito.limpiar()
     return render(request, 'catalogo/confirmacion.html')
+
+def registro(request):
+    if request.method == "POST":
+        form = RegistroForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user) # Inicia sesión automáticamente al registrarse
+            return redirect("home")
+    else:
+        form = RegistroForm()
+    return render(request, "catalogo/registro.html", {"form": form})
