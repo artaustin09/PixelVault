@@ -1,0 +1,42 @@
+{% extends 'catalogo/base.html' %}
+{% block content %}
+<div style="background: #000; color: white; padding: 40px; min-height: 100vh; font-family: 'Courier New', Courier, monospace;">
+    <h1 style="color: #00e5ff; text-align: center; text-transform: uppercase;">Tu Bóveda de Compra</h1>
+    
+    <div style="max-width: 800px; margin: 0 auto; background: #121212; padding: 30px; border-radius: 15px; border: 1px solid #6200ea; box-shadow: 0 0 20px rgba(98, 0, 234, 0.3);">
+        {% if request.session.carrito.items %}
+            {% for key, value in request.session.carrito.items %}
+                <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #333; padding: 20px 0;">
+                    <div>
+                        <h2 style="margin: 0; color: #fff;">{{ value.nombre }}</h2>
+                        <p style="color: #00e5ff; margin: 5px 0;">Cantidad: {{ value.cantidad }}</p>
+                    </div>
+                    <div style="text-align: right;">
+                        <p style="font-size: 1.5em; color: #00e5ff; font-weight: bold; margin: 0;">${{ value.total }}</p>
+                        <a href="{% url 'eliminar_del_carrito' value.juego_id %}" style="color: #ff1744; text-decoration: none; font-size: 0.9em;">[ELIMINAR]</a>
+                    </div>
+                </div>
+            {% endfor %}
+
+            <div style="margin-top: 40px; display: flex; justify-content: space-between; align-items: center;">
+                <a href="{% url 'limpiar_carrito' %}" style="color: #aaa; text-decoration: none; font-weight: bold;">VACIAR BÓVEDA</a>
+                
+                <div style="text-align: right;">
+                    <a href="{% url 'home' %}" style="color: #00e5ff; margin-right: 20px; text-decoration: none;">SEGUIR COMPRANDO</a>
+                    <a href="{% url 'confirmar_compra' %}" 
+   style="background: #6200ea; color: white; padding: 15px 30px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 1.2em; display: inline-block;">
+   FINALIZAR COMPRA 🚀
+</a>
+                </div>
+            </div>
+        {% else %}
+            <div style="text-align: center; padding: 60px;">
+                <h2 style="color: #444;">LA BÓVEDA ESTÁ VACÍA</h2>
+                <a href="{% url 'home' %}" style="color: #00e5ff; text-decoration: none; border: 1px solid #00e5ff; padding: 10px 20px; border-radius: 5px; margin-top: 20px; display: inline-block;">
+                    VOLVER A LA TIENDA
+                </a>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

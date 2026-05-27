@@ -1,15 +1,61 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from .models import Videojuego
+from .carrito import Carrito 
+from django.db.models import Q # Para el buscador avanzado
 
+# --- HOME CON BUSCADOR PROFUNDO ---
 def home(request):
     juegos = Videojuego.objects.all()
-    # Verifica que el archivo esté en templates/catalogo/home.html
-    return render(request, 'catalogo/home.html', {'juegos': juegos})
+    query = request.GET.get('buscar')
+    
+    if query:
+        # Buscamos por Título, Géneros, Desarrolladora o Vendedor
+        # NOTA: He quitado 'plataforma' de la búsqueda automática para evitar el FieldError
+        # si no estamos seguros del nombre del campo.
+        juegos = juegos.filter(
+            Q(titulo__icontains=query) | 
+            Q(generos__nombre__icontains=query) |
+            Q(desarrolladora__nombre__icontains=query) |
+            Q(vendedor__nombre__icontains=query)
+        ).distinct()
+        
+    return render(request, 'catalogo/home.html', {
+        'juegos': juegos,
+        'busqueda': query
+    })
 
+# --- DETALLE DEL JUEGO (CORREGIDO PARA EVITAR FIELDERROR) ---
 def detalle_juego(request, juego_id):
-    juego = get_object_or_404(Videojuego, pk=juego_id)
+    # Solo usamos select_related con los campos que Django confirmó en tu error:
+    # 'desarrolladora' y 'vendedor'.
+    juego = get_object_or_404(
+        Videojuego.objects.select_related('desarrolladora', 'vendedor'), 
+        pk=juego_id
+    )
     return render(request, 'catalogo/detalle_juego.html', {'juego': juego})
 
-def confirmar_compra(request, juego_id):
-    juego = get_object_or_404(Videojuego, pk=juego_id)
-    return render(request, 'catalogo/confirmacion.html', {'juego': juego})
+# --- FUNCIONES DEL CARRITO (Mantenlas igual) ---
+def agregar_al_carrito(request, juego_id):
+    carrito = Carrito(request)
+    juego = get_object_or_404(Videojuego, id=juego_id)
+    carrito.agregar(juego=juego)
+    return redirect("home")
+
+def ver_carrito(request):
+    return render(request, 'catalogo/carrito_detalle.html')
+
+def eliminar_del_carrito(request, juego_id):
+    carrito = Carrito(request)
+    juego = get_object_or_404(Videojuego, id=juego_id)
+    carrito.eliminar(juego)
+    return redirect("ver_carrito")
+
+def limpiar_carrito(request):
+    carrito = Carrito(request)
+    carrito.limpiar()
+    return redirect("ver_carrito")
+
+def confirmar_compra(request):
+    carrito = Carrito(request)
+    carrito.limpiar()
+    return render(request, 'catalogo/confirmacion.html')

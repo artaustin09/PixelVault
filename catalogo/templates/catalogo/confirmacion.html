@@ -1,24 +1,28 @@
 {% extends 'catalogo/base.html' %}
+{% block title %}PixelVault - ¡Éxito!{% endblock %}
 
 {% block content %}
-<div class="container mt-5 d-flex justify-content-center">
-    <div class="bg-dark p-5 rounded-4 border border-success text-center shadow-lg" 
-         style="max-width: 600px; background: linear-gradient(145deg, #0a0a0a, #1a1a1a);">
+<div style="background: #000; min-height: 80vh; display: flex; justify-content: center; align-items: center; text-align: center; color: white; padding: 20px;">
+    <div style="background: #121212; padding: 60px; border-radius: 25px; border: 2px solid #00e5ff; box-shadow: 0 0 40px rgba(0, 229, 255, 0.2); max-width: 600px;">
         
-        <h1 class="display-4 fw-bold text-success mb-2">¡COMPRA EXITOSA!</h1>
-        <div class="my-4">
-            <span class="badge bg-info text-dark fs-5 p-3">Key: PX-{{ juego.id }}77-VLT</span>
-        </div>
+        <div style="font-size: 80px; color: #00e5ff; margin-bottom: 20px;">✓</div>
         
-        <h3 class="text-white mb-4">Has adquirido <span class="text-info">{{ juego.titulo }}</span></h3>
+        <h1 style="color: #00e5ff; font-size: 2.5em; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 2px;">
+            ¡Compra Completada!
+        </h1>
         
-        <p class="text-secondary fs-5 mb-5">
-            El código ha sido enviado a tu cuenta.<br>
-            Vendedor: <span class="text-info">@{{ juego.vendedor.username }}</span>
+        <p style="font-size: 1.1em; color: #aaa; line-height: 1.6; margin-bottom: 30px;">
+            Tu transacción ha sido procesada en la red de PixelVault. <br>
+            Los códigos de descarga han sido enviados a tu base de datos personal.
         </p>
 
-        <div class="d-grid gap-3">
-            <a href="{% url 'home' %}" class="btn btn-outline-info fw-bold p-3">VOLVER A LA TIENDA</a>
+        <div style="display: flex; flex-direction: column; gap: 15px;">
+            <a href="{% url 'home' %}" 
+               style="background: #6200ea; color: white; padding: 15px 30px; border-radius: 8px; text-decoration: none; font-weight: bold; text-transform: uppercase; transition: 0.3s;">
+                Volver a la Tienda
+            </a>
+            
+            <p style="font-size: 0.8em; color: #444;">ID de Transacción: #PX-{{ 1000|add:500 }}</p>
         </div>
     </div>
 </div>
