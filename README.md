@@ -1,5 +1,5 @@
 ```markdown
-# 🎮 PIXELVAULT – Marketplace de Llaves Digitales de Videojuegos
+### 🎮 PIXELVAULT – Marketplace de Llaves Digitales de Videojuegos
 
 **Proyecto:** PIXELVAULT  
 **Temática:** Venta de videojuegos digitales  
@@ -17,7 +17,7 @@ Avalos Garcia Carlos Uriel
 
 ---
 
-## 📑 Índice
+### 📑 Índice
 
 1. [Introducción](#1-introducción)
 2. [Desarrollo](#2-desarrollo)
@@ -30,7 +30,7 @@ Avalos Garcia Carlos Uriel
 
 ---
 
-## 1. Introducción
+### 1. Introducción
 
 **PIXELVAULT** es una plataforma de comercio electrónico desarrollada con **Django** (Python) especializada en la venta de llaves digitales de videojuegos. El proyecto aplica los conceptos fundamentales de bases de datos relacionales en un entorno web real.
 
@@ -48,7 +48,7 @@ Avalos Garcia Carlos Uriel
 
 ---
 
-## 2. Desarrollo
+### 2. Desarrollo
 
 ### 2.1 Modelos de datos y relaciones
 
