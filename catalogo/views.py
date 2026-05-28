@@ -27,10 +27,9 @@ def home(request):
 
 # --- DETALLE DEL JUEGO (CORREGIDO PARA EVITAR FIELDERROR) ---
 def detalle_juego(request, juego_id):
-    # Solo usamos select_related con los campos que Django confirmó en tu error:
-    # 'desarrolladora' y 'vendedor'.
+    # Traemos el juego con TODAS sus relaciones
     juego = get_object_or_404(
-        Videojuego.objects.select_related('desarrolladora', 'vendedor'), 
+        Videojuego.objects.select_related('desarrolladora', 'vendedor').prefetch_related('plataformas', 'generos'), 
         pk=juego_id
     )
     return render(request, 'catalogo/detalle_juego.html', {'juego': juego})

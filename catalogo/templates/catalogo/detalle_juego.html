@@ -2,67 +2,59 @@
 {% block title %}PixelVault - {{ juego.titulo }}{% endblock %}
 
 {% block content %}
-<div style="background-color: #000; min-height: 100vh; padding: 40px; color: white; font-family: 'Segoe UI', Tahoma, sans-serif;">
-    
-    <a href="{% url 'home' %}" style="color: #00e5ff; text-decoration: none; font-weight: bold; display: inline-block; margin-bottom: 25px; transition: 0.3s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#00e5ff'">
+<div style="background-color: #000; min-height: 100vh; padding: 40px; color: white; font-family: 'Segoe UI', sans-serif;">
+    <a href="{% url 'home' %}" style="color: #00e5ff; text-decoration: none; font-weight: bold; display: inline-block; margin-bottom: 30px;">
         ← VOLVER AL CATÁLOGO
     </a>
 
-    <div style="display: flex; gap: 50px; background: #111; padding: 40px; border-radius: 20px; border: 1px solid #333; box-shadow: 0 15px 35px rgba(0,0,0,0.7);">
-        
+    <div style="display: flex; gap: 50px; background: #111; padding: 40px; border-radius: 20px; border: 1px solid #333;">
         <div style="flex: 1; max-width: 450px;">
             {% if juego.portada %}
-                <img src="{{ juego.portada.url }}" alt="{{ juego.titulo }}" style="width: 100%; border-radius: 15px; border: 2px solid #6200ea; box-shadow: 0 0 25px rgba(98, 0, 234, 0.3);">
-            {% else %}
-                <div style="width: 100%; height: 500px; background: #222; border-radius: 15px; display: flex; align-items: center; justify-content: center; color: #555;">
-                    SIN IMAGEN DISPONIBLE
-                </div>
+                <img src="{{ juego.portada.url }}" alt="{{ juego.titulo }}" style="width: 100%; border-radius: 15px; border: 1px solid #444;">
             {% endif %}
         </div>
 
         <div style="flex: 2;">
-            <h1 style="font-size: 3.5em; margin: 0; color: #fff; text-transform: uppercase; letter-spacing: 2px;">{{ juego.titulo }}</h1>
-            
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 25px; margin: 30px 0; background: #1a1a1a; padding: 25px; border-radius: 15px; border-left: 4px solid #6200ea;">
+            <h1 style="font-size: 3.5em; margin: 0; color: #fff; text-transform: uppercase;">{{ juego.titulo }}</h1>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin: 30px 0; border-top: 1px solid #333; padding-top: 30px;">
+                
                 <div>
-                    <p style="color: #00e5ff; margin: 0 0 5px 0; font-size: 0.85em; font-weight: bold; text-transform: uppercase; letter-spacing: 1px;">🎮 Plataforma</p>
-                    <p style="margin: 0; font-size: 1.1em;">{{ juego.plataforma.nombre }}{{ juego.plataformas.nombre }}</p>
+                    <p style="color: #00e5ff; margin: 0 0 8px 0; font-size: 0.85em; font-weight: bold; text-transform: uppercase;">Plataformas</p>
+                    <p style="margin: 0; font-size: 1.1em; color: #eee;">
+                        {% for plataforma in juego.plataformas.all %}
+                            {{ plataforma.nombre }}{% if not forloop.last %}, {% endif %}
+                        {% empty %}
+                            <span style="color: #ff4444;">⚠️ No seleccionada en Admin</span>
+                        {% endfor %}
+                    </p>
                 </div>
+
                 <div>
-                    <p style="color: #00e5ff; margin: 0 0 5px 0; font-size: 0.85em; font-weight: bold; text-transform: uppercase; letter-spacing: 1px;">🏢 Desarrolladora</p>
-                    <p style="margin: 0; font-size: 1.1em;">{{ juego.desarrolladora.nombre|default:"Estudio Independiente" }}</p>
+                    <p style="color: #00e5ff; margin: 0 0 8px 0; font-size: 0.85em; font-weight: bold; text-transform: uppercase;">Desarrolladora</p>
+                    <p style="margin: 0; font-size: 1.1em;">{{ juego.desarrolladora.nombre }}</p>
                 </div>
+
                 <div>
-                    <p style="color: #00e5ff; margin: 0 0 5px 0; font-size: 0.85em; font-weight: bold; text-transform: uppercase; letter-spacing: 1px;">👤 Vendedor</p>
-                    <p style="margin: 0; font-size: 1.1em;">{{ juego.vendedor.nombre|default:"PixelVault Oficial" }}</p>
-                </div>
-                <div>
-                    <p style="color: #00e5ff; margin: 0 0 5px 0; font-size: 0.85em; font-weight: bold; text-transform: uppercase; letter-spacing: 1px;">🏷️ Géneros</p>
+                    <p style="color: #00e5ff; margin: 0 0 8px 0; font-size: 0.85em; font-weight: bold; text-transform: uppercase;">Géneros</p>
                     <p style="margin: 0; font-size: 1.1em;">
                         {% for genero in juego.generos.all %}
                             {{ genero.nombre }}{% if not forloop.last %}, {% endif %}
                         {% empty %}
-                            Acción / Aventura
+                            Sin géneros
                         {% endfor %}
                     </p>
                 </div>
+
+                <div>
+                    <p style="color: #00e5ff; margin: 0 0 8px 0; font-size: 0.85em; font-weight: bold; text-transform: uppercase;">Precio</p>
+                    <p style="margin: 0; font-size: 1.5em; font-weight: bold;">${{ juego.precio }}</p>
+                </div>
             </div>
 
-            <p style="font-size: 1.2em; line-height: 1.8; color: #bbb; margin-bottom: 40px; text-align: justify;">
-                {{ juego.descripcion }}
-            </p>
-
-            <div style="background: #1a1a1a; padding: 25px; border-radius: 15px; display: inline-block; border: 1px solid #333;">
-                <p style="margin: 0; font-size: 0.9em; color: #888; text-transform: uppercase;">Precio de la Llave Digital</p>
-                <p style="margin: 0; font-size: 3em; color: #00e5ff; font-weight: bold;">${{ juego.precio }}</p>
-            </div>
-
-            <div style="margin-top: 40px; display: flex; gap: 20px;">
-                <a href="{% url 'agregar_al_carrito' juego.id %}" 
-                   style="background: #6200ea; color: white; padding: 20px 50px; border-radius: 10px; text-decoration: none; font-weight: bold; font-size: 1.3em; text-transform: uppercase; transition: 0.3s; box-shadow: 0 5px 20px rgba(98, 0, 234, 0.4);"
-                   onmouseover="this.style.background='#7c4dff'; this.style.transform='scale(1.05)'"
-                   onmouseout="this.style.background='#6200ea'; this.style.transform='scale(1)'">
-                   🛒 AÑADIR A LA BÓVEDA
+            <div style="margin-top: 40px;">
+                <a href="{% url 'agregar_al_carrito' juego.id %}" style="background: #6200ea; color: white; padding: 20px 45px; border-radius: 12px; text-decoration: none; font-weight: bold;">
+                    🛒 AÑADIR AL CARRITO
                 </a>
             </div>
         </div>
