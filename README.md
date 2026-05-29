@@ -17,7 +17,7 @@ Avalos Garcia Carlos Uriel
 
 ---
 
-`📑 Índice`
+# 📑 Indice`
 
 1. [Introducción](#1-introducción)
 2. [Desarrollo](#2-desarrollo)
@@ -30,7 +30,7 @@ Avalos Garcia Carlos Uriel
 
 ---
 
-`1. Introducción`
+`1. Introduccion`Introducción
 
 **PIXELVAULT** es una plataforma de comercio electrónico desarrollada con **Django** (Python) especializada en la venta de llaves digitales de videojuegos. El proyecto aplica los conceptos fundamentales de bases de datos relacionales en un entorno web real.
 
